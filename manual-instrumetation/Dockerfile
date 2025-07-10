@@ -15,18 +15,11 @@ RUN pip uninstall opentelemetry-instrumentation-aws-lambda -y
 COPY . .
 
 # Set environment variables for Flask
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=development
-
-ENV OTEL_LOGS_EXPORTER="console"
-ENV OTEL_METRICS_EXPORTER="console"
-ENV OTEL_TRACES_EXPORTER="console,otlp"
 ENV OTEL_EXPORTER_OTLP_ENDPOINT="0.0.0.0:4317"
-ENV OTEL_SERVICE_NAME=app
 ENV OTEL_EXPORTER_OTLP_INSECURE=true
-
+ENV OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
 # Expose the application port (if needed, e.g., Flask)
 EXPOSE 80
 
 # Set the command to run the app
-CMD ["opentelemetry-instrument","python", "app.py"]
+CMD ["opentelemetry-instrument", "--traces_exporter", "console", "--metrics_exporter", "console", "--logs_exporter", "console", "--service_name", "dice-server", "flask", "run", "-p", "8080"]
