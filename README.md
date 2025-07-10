@@ -2,7 +2,7 @@
  
 This project demonstrates comprehensive observability implementation for distributed systems using OpenTelemetry (OTel), showcasing different instrumentation approaches and deployment strategies in containerized and Kubernetes environments.
 
-## 🎯 Project Overview
+## Project Overview
 
 The project implements a **Cardiac Analysis Service** - a medical data analysis application that serves as a realistic example for demonstrating observability patterns. The application analyzes patient cardiac data and provides risk assessments, making it perfect for showcasing how to monitor critical business applications.
 
@@ -13,7 +13,7 @@ The project implements a **Cardiac Analysis Service** - a medical data analysis 
 - **Production-Ready Configurations**: Docker Compose and Kubernetes deployments
 - **Real-world Application**: Medical data analysis with premium service tiers
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -29,7 +29,7 @@ The project implements a **Cardiac Analysis Service** - a medical data analysis 
                                     └─────────┘ └─────────┘ └─────────┘
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Observability-in-ML/
@@ -52,7 +52,7 @@ Observability-in-ML/
     └── values_daemonset.yaml       # DaemonSet mode values
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -162,7 +162,7 @@ kubectl apply -f K8-Operator/autom-instrument.yaml
 # sidecar.opentelemetry.io/inject: "true"
 ```
 
-## 🎛️ Configuration Deep Dive
+## Configuration Deep Dive
 
 ### OpenTelemetry Collector Configuration
 
@@ -183,7 +183,7 @@ The collector is configured to:
 - Kubernetes events collection
 - Single replica for cluster-wide data
 
-## 🏥 Demo Application Details
+## Demo Application Details
 
 ### Cardiac Analysis Service
 
@@ -203,7 +203,7 @@ The demo application simulates a medical service that:
 ### Sample Transaction IDs
 Check the `data/Transactions.csv` file for valid transaction IDs to test with.
 
-## 📊 Observability Features
+## Observability Features
 
 ### Distributed Tracing
 - **Jaeger Integration**: Complete request tracing across services
@@ -220,7 +220,7 @@ Check the `data/Transactions.csv` file for valid transaction IDs to test with.
 - **Log Correlation**: Trace ID injection
 - **Centralized Collection**: Aggregated log viewing
 
-## 🔍 Monitoring and Alerting
+## Monitoring and Alerting
 
 ### Key Metrics to Monitor
 - Request latency and throughput
@@ -235,7 +235,7 @@ Configure alerts for:
 - Service unavailability
 - Resource exhaustion
 
-## 🛠️ Development and Testing
+## Development and Testing
 
 ### Local Development
 ```bash
@@ -256,7 +256,7 @@ opentelemetry-instrument --traces_exporter console --service_name cardiac-server
 3. Check metrics in Prometheus
 4. Validate log correlation
 
-## 📚 Best Practices
+## Best Practices
 
 ### Instrumentation Guidelines
 - Use semantic naming for spans and attributes
@@ -276,7 +276,7 @@ opentelemetry-instrument --traces_exporter console --service_name cardiac-server
 - Use TLS for data transmission
 - Sanitize sensitive data in traces
 
-## 🔄 Production Deployment
+## Production Deployment
 
 ### Scaling Considerations
 - Deploy collectors as DaemonSets for node-level data
@@ -290,7 +290,7 @@ opentelemetry-instrument --traces_exporter console --service_name cardiac-server
 - Plan for disaster recovery scenarios
 - Monitor data pipeline health
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -298,11 +298,11 @@ opentelemetry-instrument --traces_exporter console --service_name cardiac-server
 4. Add tests and documentation
 5. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+## Support
 
 For issues and questions:
 - Check the documentation
@@ -318,5 +318,3 @@ For issues and questions:
 - [OpenTelemetry Operator](https://github.com/open-telemetry/opentelemetry-operator)
 
 ---
-
-**Happy Monitoring! 🚀** 
