@@ -21,4 +21,4 @@ ENV OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
 
 
 # Set the command to run the app
-CMD ["opentelemetry-instrument", "--traces_exporter", "console,otlp", "--metrics_exporter", "console", "--logs_exporter", "console",  "--exporter_otlp_endpoint", "otel-collector:4317", "--service_name", "dice-server", "flask", "run","--host=0.0.0.0", "-p", "8080"]
+CMD ["opentelemetry-instrument", "--traces_exporter", "console,otlp", "--metrics_exporter", "console", "--logs_exporter", "console",  "--exporter_otlp_endpoint", "otel-collector:4317", "--service_name", "cardiac-server", "flask", "run","--host=0.0.0.0", "-p", "8099"]

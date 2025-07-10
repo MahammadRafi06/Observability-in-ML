@@ -1,0 +1,85 @@
+services:
+
+### APPLICATION PART
+
+
+  cardiac-server:
+    image: mrafit20/opt:1.1.4
+    networks:
+      - optel 
+    ports:
+      - "8080:8080"
+
+  jaeger:
+    image: ${JAEGERTRACING_IMAGE}
+    networks:
+      - optel
+    command:
+      - "--memory.max-traces=5000"
+      - "--prometheus.server-url=http://prometheus:9090"
+      - "--prometheus.query.normalize-calls=true"
+      - "--prometheus.query.normalize-duration=true"
+ #      - "--query.base-path=/jaeger/ui"
+    ports:
+      - "16686:16686"
+    restart: unless-stopped
+    environment:
+      - METRICS_STORAGE_TYPE=prometheus
+
+  otelcol:
+    image: ${COLLECTOR_CONTRIB_IMAGE}
+    restart: unless-stopped
+    networks:
+      - optel
+    command: ["--config=/etc/otel-collector-config.yml", ""]
+    volumes:
+      - ./collector/otel-collector-config.yml:/etc/otel-collector-config.yml
+    ports:
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"
+    depends_on:
+      - jaeger
+
+  # Prometheus
+  prometheus:
+    image: ${PROMETHEUS_IMAGE}
+    networks:
+      - optel
+    command:
+      - --web.console.templates=/etc/prometheus/consoles
+      - --web.console.libraries=/etc/prometheus/console_libraries
+      - --storage.tsdb.retention.time=1h
+      - --config.file=/etc/prometheus/prometheus-config.yaml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+      - --web.route-prefix=/
+      - --enable-feature=exemplar-storage
+      - --enable-feature=otlp-write-receiver
+    volumes:
+      - ./prometheus/prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml
+    restart: unless-stopped
+    ports:
+      - "${PROMETHEUS_SERVICE_PORT}:${PROMETHEUS_SERVICE_PORT}"
+
+
+networks:
+  optel:
+
+#   # opensearch:
+#   #   image: ${OPENSEARCH_IMAGE}
+#   #   container_name: opensearch
+#   #   deploy:
+#   #     resources:
+#   #       limits:
+#   #         memory: 1G
+#   #   restart: unless-stopped
+#   #   environment:
+#   #     - cluster.name=demo-cluster
+#   #     - node.name=demo-node
+#   #     - bootstrap.memory_lock=true
+#   #     - discovery.type=single-node
+#   #     - OPENSEARCH_JAVA_OPTS=-Xms300m -Xmx300m
+#   #     - DISABLE_INSTALL_DEMO_CONFIG=true
+#   #     - DISABLE_SECURITY_PLUGIN=true
+#   #   ports:
+#   #     - "9200:9200"
